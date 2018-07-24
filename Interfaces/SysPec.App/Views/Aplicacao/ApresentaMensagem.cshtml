@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Mensagem";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        @switch ((SysPec.App.Controllers.MessageType)ViewBag.MessageType)
+        {
+            case SysPec.App.Controllers.MessageType.Error:
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Atenção:</span>
+                    @ViewBag.menssagem
+                </div>
+                break;
+            case SysPec.App.Controllers.MessageType.Sucess:
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                    @ViewBag.menssagem
+                </div>
+                break;
+            case SysPec.App.Controllers.MessageType.Warning:
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Atenção:</span>
+                    @ViewBag.menssagem
+                </div>
+                break;
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">@Html.ActionLink("Vacinar Lote", "PorLote", null, new { @class = "btn btn-lg btn-primary btn-block" })</div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">@Html.ActionLink("Vacinar Animal", "PorAnimal", null, new { @class = "btn btn-lg btn-primary btn-block" })</div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">@Html.ActionLink("Pagina Inicial", "Index", "Dashboard", null,new { @class = "btn btn-lg btn-danger btn-block" })</div>
+</div>

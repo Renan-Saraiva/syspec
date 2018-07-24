@@ -1,0 +1,60 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Pastos cadastrados
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.Pastos != null && ViewBag.Pastos.Count > 0)
+                {
+                    <div class="table-responsive dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-pastos">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Quantidade de Animais suportado</th>
+                                        <th>Quantidade de Animais atualmente</th>
+                                        <th>Anotações</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < ViewBag.Pastos.Count; i++)
+                                {
+                                        <tr class="@(i % 2 == 0 ? "odd" : "even") gradeA">
+                                            <td>@ViewBag.Pastos[i].Nome</td>
+                                            <td>@ViewBag.Pastos[i].QtdAnimaisSuporte</td>
+                                            <td>@ViewBag.Pastos[i].GetQtnAnimais()</td>
+                                            <td>@SysPec.App.Helpers.Helper.GetSubString(ViewBag.Pastos[i].Anotacoes, 80)</td>
+                                            <td class="text-right">
+                                                <a href="@Url.Action("Index", new { PastoId = ViewBag.Pastos[i].Id })" class="btn btn-primary btn-circle">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                }
+                                </tbody>
+                            </table>
+                    </div>
+                    <script>
+                        window.onload = function () {
+                            $('#dataTables-pastos').DataTable();
+                        };
+                    </script>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-warning" role="alert">
+                                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Atenção:</span>
+                                Não existe pastos cadastradas.
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

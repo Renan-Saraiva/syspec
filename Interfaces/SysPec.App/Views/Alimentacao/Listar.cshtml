@@ -1,0 +1,149 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @ViewBag.Titulo
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.Alimentacoes != null && ViewBag.Alimentacoes.Count > 0)
+                {
+                    <div class="table-responsive dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-alimentacoes">
+                            <thead>
+                                <tr>
+                                    @if (ViewBag.ApresentaDadoAnimais)
+                                    {
+                                        <th>Animal</th>
+                                    }
+                                    <th>Ração</th>
+                                    <th>Data de Inclusão</th>
+                                    <th>Data de Saída</th>
+                                    <th>Pasto</th>
+                                    @if (ViewBag.ApresentaDadoAnimais)
+                                    {
+                                        <th>Lote</th>
+                                    }
+                                    <th>Anotações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < ViewBag.Alimentacoes.Count; i++)
+                                {
+
+                                    <tr class="@(i % 2 == 0 ? "odd" : "even") gradeA">
+                                        @if (ViewBag.ApresentaDadoAnimais)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("Index", "Animal", new { AnimalId = ViewBag.Alimentacoes[i].Animal })">
+                                                    @ViewBag.Alimentacoes[i].CodigoAnimal
+                                                </a>
+                                            </td>
+                                        }
+                                        <td>@SysPec.App.Helpers.Current.Racoes.GetNomeRacao(ViewBag.Alimentacoes[i].Racao)</td>
+                                        <td>@ViewBag.Alimentacoes[i].CriadoEm.ToString("dd/MM/yyyy")</td>
+
+                                        @if (ViewBag.Alimentacoes[i].Antigo)
+                                        {
+                                            <td>@ViewBag.Alimentacoes[i + 1].CriadoEm.ToString("dd/MM/yyyy")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Atual</td>
+                                        }
+
+                                        <td>@ViewBag.Alimentacoes[i].PastoNome</td>
+                                        @if (ViewBag.ApresentaDadoAnimais)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("Index", "Lote", new { LoteId = ViewBag.Alimentacoes[i].Lote })">
+                                                    @ViewBag.Alimentacoes[i].LoteNome
+                                                </a>
+                                            </td>
+                                        }
+                                        <td>@SysPec.App.Helpers.Helper.GetSubString(ViewBag.Alimentacoes[i].Anotacoes, 40)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        jQuery(function () {
+                            $('#dataTables-alimentacoes').DataTable();
+                        });
+                    </script>
+
+                    if (ViewBag.ApresentaGrafico)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Histórico De Ganho De Peso
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="AlimentacaoChart"></canvas>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+
+                        <script>
+                            jQuery(function () {
+
+                                var ctx = $("#AlimentacaoChart");
+
+                                var animation = {
+                                    animateScale: true
+                                };
+
+                                var data = {
+                                    labels: [@Html.Raw(ViewBag.Datas)],
+                                    datasets: [
+                                        {
+                                            label: 'Peso (Kg)',
+                                            fill: false,
+                                            lineTension: 0.1,
+                                            backgroundColor: 'rgba(75,192,192,0.4)',
+                                            borderColor: 'rgba(75,192,192,1)',
+                                            borderCapStyle: 'butt',
+                                            borderDash: [],
+                                            borderDashOffset: 0.0,
+                                            borderJoinStyle: 'miter',
+                                            pointBorderColor: 'rgba(75,192,192,1)',
+                                            pointBackgroundColor: '#fff',
+                                            pointBorderWidth: 1,
+                                            pointHoverRadius: 5,
+                                            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                                            pointHoverBorderColor: 'rgba(220,220,220,1)',
+                                            pointHoverBorderWidth: 2,
+                                            pointRadius: 1,
+                                            pointHitRadius: 10,
+                                            data: [@ViewBag.Pesos],
+                                        }
+                                    ]
+                                };
+
+                                var myLineChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data
+                                });
+
+                            });
+                        </script>
+                        <script src="~/Scripts/Chart.min.js"></script>
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-warning" role="alert">
+                                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Atenção:</span>
+                                Sem registro de alimentações
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

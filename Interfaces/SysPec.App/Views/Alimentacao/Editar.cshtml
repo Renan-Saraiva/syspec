@@ -1,0 +1,23 @@
+﻿@model SysPec.Data.Models.Alimentacao
+<div class="form-group">
+    @Html.LabelFor(m => m.Racao)
+    @Html.DropDownList("Racao", new SelectList(SysPec.App.Helpers.Current.Racoes, "Id", "Nome"), new { @class = "form-control" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Pasto)
+    @Html.DropDownList("Pasto", new SelectList(ViewBag.Pastos, "Id", "Nome"), "Selecione...", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Pasto, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Peso)
+    <div class="input-group">
+        @Html.TextBoxFor(m => m.Peso, new { @class = "form-control", type = "number" })
+        <div class="input-group-addon">(ml,mg)</div>
+    </div>
+    @Html.ValidationMessageFor(m => m.Peso, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Anotacoes)
+    @Html.TextAreaFor(m => m.Anotacoes, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Anotacoes, "", new { @class = "text-danger" })
+</div>

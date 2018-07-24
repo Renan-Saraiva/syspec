@@ -1,0 +1,146 @@
+﻿@model SysPec.Data.Models.Animal
+@{
+    ViewBag.Title = "Animais";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<p class="text-success text-center">@ViewBag.StatusMessage</p>
+@if (!ViewBag.ApresentaBusca)
+{
+    if (ViewBag.AnimalExiste)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Dados do animal: @Model.Codigo
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2"><label>Código</label></div>
+                    <div class="col-lg-4">@Model.Codigo</div>
+                    <div class="col-lg-2"><label>Data de Nascimento</label></div>
+                    <div class="col-lg-4">@Model.NascidoEm.ToString("dd/MM/yyyy")</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"><label>Peso</label></div>
+                    <div class="col-lg-4">@Model.Peso.ToString("0.00 kg")</div>
+                    <div class="col-lg-2"><label>Sexo</label></div>
+                    <div class="col-lg-4">@SysPec.Data.Models.Sexos.GetNomeSexo(Model.Sexo)</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"><label>Raça</label></div>
+                    <div class="col-lg-4">@SysPec.Data.Models.Racas.GetNomeRaca(Model.Raca)</div>
+                    <div class="col-lg-2"><label>Lote</label></div>
+                    <div class="col-lg-4">
+                        <a href="@Url.Action("Index", "Lote", new { LoteId = Model.Lote })">
+                            @Model.LoteNome
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Action("ListByAnimal", "Aplicacao", new { AnimalId = Model.Id })
+        @Html.Action("ListByAnimal", "Alimentacao", new { AnimalId = Model.Id })
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+                <button type="button" data-toggle="modal" data-target="#mdldesabilita" class="btn btn-lg btn-danger btn-block">Desabilitar Animal</button>
+            </div>
+        </div>
+        <div class="modal fade" id="mdldesabilita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Desabilitar animal</h4>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("Desabilitar", "Animal", FormMethod.Post, new { role = "form", id = "desabilitaForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.Id)
+                        }
+                        <p class="text-danger">
+                            <b>Tem certeza que deseja desabilitar este animal?</b><br />
+                            Após ser desabilitado não será possivel alterar o stutus do mesmo
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="document.getElementById('desabilitaForm').submit()">Desabilitar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        if (ViewBag.LotesDisponiveis.Count > 0)
+        {
+            using (Html.BeginForm("Index", "Animal", FormMethod.Post, new { role = "form" }))
+            {
+                <p class="text-success text-center">@ViewBag.StatusMessage</p>
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NascidoEm)
+                    @Html.TextBoxFor(m => m.NascidoEm, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.NascidoEm, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="Peso">Peso</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">KG</div>
+                        <input class="form-control" data-val="true" data-val-number="The field Peso must be a number." data-val-range="O Peso do animal deve estar entre 1 e 3000 kilos" data-val-range-max="3000" data-val-range-min="1" data-val-required="O campo Peso é obrigatório." id="Peso" name="Peso" type="number" value="">
+                        <div class="input-group-addon">.00</div>
+                    </div>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Peso" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Sexo">Sexo dos animais</label>
+                    @Html.DropDownList("Sexo", new SelectList(SysPec.Data.Models.Sexos.List(), "Id", "Name"),"Selecione...",new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="Raca">Raça dos animais</label>
+                    @Html.DropDownList("Raca", new SelectList(SysPec.Data.Models.Racas.List(), "Id", "Name"), "Selecione...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Raca, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="Lote">Lote</label>
+                    @Html.DropDownList("Lote", new SelectList(ViewBag.LotesDisponiveis, "Id", "Nome"), "Selecione...", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Lote, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        @Html.ActionLink("Pesquisar", "Index", new { ApresentaBusca = true }, new { @class = "btn btn-lg btn-primary btn-block" })
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="Adicionar" class="btn btn-lg btn-success btn-block" />
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Atenção:</span>
+                        Não existe lotes disponivel para adicionar um animail. Clique @Html.ActionLink("aqui", "Index", "Lote", null, new { @class = "alert-link" }) para registrar um novo lote.
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    @Html.Partial("BuscaFormulario");
+}

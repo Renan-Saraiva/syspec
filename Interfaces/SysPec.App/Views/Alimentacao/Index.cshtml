@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Alimentação";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@using (Html.BeginForm("PorLote", "Alimentacao", FormMethod.Get, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-sm-11">
+            <div class="form-group">
+                @Html.DropDownList("LoteId", new SelectList(ViewBag.Lotes, "Id", "Nome"), "Selecione um lote", new { @class = "form-control", data_val = "true", data_val_number = "The field Lote must be a number.", data_val_required = "O campo Lote é obrigatório." })
+                <span class="field-validation-valid text-danger" data-valmsg-for="LoteId" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-default">Selecionar</button>
+        </div>
+    </div>
+}

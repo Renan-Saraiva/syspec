@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Racões da Fazenda";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@Html.Action("Listar", "Racao");
+<br />
+<div class="row">
+    <div class="col-lg-3">
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-lg btn-danger btn-block" })
+    </div>
+</div>

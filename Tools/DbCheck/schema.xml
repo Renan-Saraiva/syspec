@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Server="saturno\dev" Name="ocr53" User="sa" xmlns="hppt://www.orbium.com.br">
+  <Tables>
+    <Table Name="Criadores">
+      <Columns>
+        <Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+        <Column Name="Nome" Type="varchar" Length="150" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="Usuario" Type="nvarchar" Length="128" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />		
+		<Column Name="Telefone" Type="varchar" Length="15" Nullable="true" Ordinal="4" Identity="false" DefaultValue="" />		
+      </Columns>
+      <Keys>
+        <Key Name="CriadoresIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="CriadoresAspNetUsersForeign" UniqueTable="AspNetUsers" Type="FOREIGN KEY" Columns="Usuario" UniqueColumns="Id" />
+      </Keys>
+    </Table>
+    <Table Name="Fazendas">
+      <Columns>
+        <Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+        <Column Name="Nome" Type="varchar" Length="150" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+        <Column Name="Criador" Type="int" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Abreviatura" Type="varchar" Length="3" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />		
+      </Columns>
+      <Keys>
+        <Key Name="FazendasIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+        <Key Name="FazendasAbreviaturaUnique" UniqueTable="" Type="UNIQUE" Columns="Criador Abreviatura" UniqueColumns="" />
+		<Key Name="FazendasCriadoresForeign" UniqueTable="Criadores" Type="FOREIGN KEY" Columns="Criador" UniqueColumns="Id" />
+      </Keys>
+    </Table>
+	<Table Name="Lotes">
+      <Columns>
+        <Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Nome" Type="varchar" Length="150" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+        <Column Name="Fazenda" Type="int" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="4" Identity="false" DefaultValue="" />
+		<Column Name="CriadoEm" Type="datetime" Length="0" Nullable="false" Ordinal="5" Identity="false" DefaultValue="" />
+		<Column Name="Habilitado" Type="bit" Length="0" Nullable="false" Ordinal="6" Identity="false" DefaultValue="((1))" />
+      </Columns>
+      <Keys>
+        <Key Name="LotesIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="LotesFazendasForeign" UniqueTable="Fazendas" Type="FOREIGN KEY" Columns="Fazenda" UniqueColumns="Id" />
+      </Keys>
+    </Table>
+	<Table Name="Animais">
+      <Columns>
+        <Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Codigo" Type="varchar" Length="25" Nullable="true" Ordinal="2" Identity="false" DefaultValue="" />
+        <Column Name="Lote" Type="int" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="NascidoEm" Type="datetime" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+		<Column Name="Habilitado" Type="bit" Length="0" Nullable="false" Ordinal="5" Identity="false" DefaultValue="((1))" />
+		<Column Name="Raca" Type="int" Length="0" Nullable="false" Ordinal="6" Identity="false" DefaultValue="" />
+		<Column Name="Sexo" Type="int" Length="0" Nullable="false" Ordinal="7" Identity="false" DefaultValue="" />
+		<Column Name="Peso" Type="float" Length="0" Nullable="false" Ordinal="8" Identity="false" DefaultValue="" />
+      </Columns>
+      <Keys>
+        <Key Name="AnimaisIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="AnimaisLotesForeign" UniqueTable="Lotes" Type="FOREIGN KEY" Columns="Lote" UniqueColumns="Id" />
+      </Keys>
+	  <Indexes>
+        <Index Name="AnimaisIdIndex" Clustered="false" Unique="false" FileGroup="INDEXES" Columns="Id|ASC" />
+      </Indexes>
+    </Table>
+	<Table Name="Genealogias">
+      <Columns>
+        <Column Name="Animal" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="false" DefaultValue="" />
+		<Column Name="Pai" Type="varchar" Length="25" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="Mae" Type="varchar" Length="25" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+      </Columns>
+      <Keys>
+        <Key Name="GenealogiasAnimaisForeign" UniqueTable="Animais" Type="FOREIGN KEY" Columns="Animal" UniqueColumns="Id" />
+      </Keys>
+    </Table>
+	<Table Name="Vacinas">
+	  <Columns>
+		<Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Nome" Type="varchar" Length="150" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Criador" Type="int" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+	  </Columns>
+	  <Keys>
+        <Key Name="VacinasIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="VacinasCriadoresForeign" UniqueTable="Criadores" Type="FOREIGN KEY" Columns="Criador" UniqueColumns="Id" />
+      </Keys>
+	</Table>
+	<Table Name="Aplicacoes">
+	  <Columns>
+		<Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Vacina" Type="int" Length="0" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="Metodo" Type="int" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="CriadoEm" Type="datetime" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="5" Identity="false" DefaultValue="" />
+		<Column Name="Validade" Type="datetime" Length="0" Nullable="false" Ordinal="6" Identity="false" DefaultValue="" />
+		<Column Name="Dosagem" Type="float" Length="0" Nullable="true" Ordinal="7" Identity="false" DefaultValue="" />
+		<Column Name="Animal" Type="int" Length="0" Nullable="false" Ordinal="8" Identity="false" DefaultValue="" />
+	  </Columns>
+	  <Keys>
+        <Key Name="AplicacoesIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="AplicacoesAnimaisForeign" UniqueTable="Animais" Type="FOREIGN KEY" Columns="Animal" UniqueColumns="Id" />
+		<Key Name="AplicacoesVacinasForeign" UniqueTable="Vacinas" Type="FOREIGN KEY" Columns="Vacina" UniqueColumns="Id" />
+      </Keys>
+	  <Indexes>
+        <Index Name="AplicacoesIdIndex" Clustered="false" Unique="false" FileGroup="INDEXES" Columns="Id|ASC" />
+      </Indexes>
+	</Table>
+	<Table Name="Pastos">
+	  <Columns>
+		<Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Nome" Type="varchar" Length="100" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="QtdAnimaisSuporte" Type="int" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Fazenda" Type="int" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="5" Identity="false" DefaultValue="" />
+		<Column Name="Habilitado" Type="bit" Length="0" Nullable="false" Ordinal="6" Identity="false" DefaultValue="((1))" />
+	  </Columns>
+	  <Keys>
+        <Key Name="PastosIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="PastosFazendasForeign" UniqueTable="Fazendas" Type="FOREIGN KEY" Columns="Fazenda" UniqueColumns="Id" />
+      </Keys>
+	</Table>
+	<Table Name="Racoes">
+	  <Columns>
+		<Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="true" DefaultValue="" />
+		<Column Name="Nome" Type="varchar" Length="150" Nullable="false" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Criador" Type="int" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+	  </Columns>
+	  <Keys>
+        <Key Name="RacoesIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="RacoesCriadoresForeign" UniqueTable="Criadores" Type="FOREIGN KEY" Columns="Criador" UniqueColumns="Id" />
+      </Keys>
+	</Table>
+	<Table Name="Alimentacoes">
+	  <Columns>
+		<Column Name="Id" Type="int" Length="0" Nullable="false" Ordinal="0" Identity="true" DefaultValue="" />
+		<Column Name="Animal" Type="int" Length="0" Nullable="false" Ordinal="1" Identity="false" DefaultValue="" />
+		<Column Name="Racao" Type="int" Length="0" Nullable="true" Ordinal="2" Identity="false" DefaultValue="" />
+		<Column Name="CriadoEm" Type="datetime" Length="0" Nullable="false" Ordinal="3" Identity="false" DefaultValue="" />
+		<Column Name="Pasto" Type="int" Length="0" Nullable="false" Ordinal="4" Identity="false" DefaultValue="" />
+		<Column Name="Anotacoes" Type="varchar" Length="-1" Nullable="true" Ordinal="5" Identity="false" DefaultValue="" />
+		<Column Name="Antigo" Type="bit" Length="0" Nullable="false" Ordinal="6" Identity="false" DefaultValue="((0))" />
+	  </Columns>
+	  <Keys>
+        <Key Name="AlimentacoesIdPrimary" UniqueTable="" Type="PRIMARY KEY" Columns="Id" UniqueColumns="" />
+		<Key Name="AlimentacoesAnimalForeign" UniqueTable="Animais" Type="FOREIGN KEY" Columns="Animal" UniqueColumns="Id" />
+		<Key Name="AlimentacoesRacaoForeign" UniqueTable="Racoes" Type="FOREIGN KEY" Columns="Racao" UniqueColumns="Id" />
+		<Key Name="AlimentacoesPastoForeign" UniqueTable="Pastos" Type="FOREIGN KEY" Columns="Pasto" UniqueColumns="Id" />
+      </Keys>
+	</Table>	
+  </Tables>  
+  <Programs>
+  </Programs>
+</Database>

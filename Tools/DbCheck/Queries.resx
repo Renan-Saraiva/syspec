@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConstraintColumns" xml:space="preserve">
+    <value>select rtrim(t.table_name), rtrim(t.constraint_name), rtrim(x.column_name), isnull(rtrim(y.column_name), ''), rtrim(x.ordinal_position)
+from information_schema.table_constraints t
+inner join information_schema.key_column_usage x on t.constraint_name = x.constraint_name
+left join information_schema.referential_constraints c on t.constraint_name = c.constraint_name
+left join information_schema.key_column_usage y on c.unique_constraint_name = y.constraint_name and x.ordinal_position = y.ordinal_position
+where t.table_name like @prefix
+order by t.table_name, t.constraint_name, x.ordinal_position</value>
+  </data>
+  <data name="Constraints" xml:space="preserve">
+    <value>select 
+	rtrim(t.table_name), 
+	rtrim(t.constraint_name), 
+	rtrim(t.constraint_type),
+	isnull(rtrim(t1.table_name), ''),
+	isnull(rtrim([partitionSchema].[partition_schema_name]),'')	[PartitionScheme]
+from 
+	information_schema.table_constraints t
+left join 
+	information_schema.referential_constraints x on x.constraint_name = t.constraint_name
+left join 
+	information_schema.table_constraints t1 on t1.constraint_name = x.unique_constraint_name
+left join
+	(
+		select 
+			t1.name [TableName], 
+			tc.CONSTRAINT_NAME [CONSTRAINT_NAME], 
+			ps1.name [partition_schema_name],  -- -- ps1.[type],
+			pf1.name [partition_function_name]
+		from 
+			sys.indexes ix1 
+		join 
+			sys.objects t1 on ix1.object_id = t1.object_id
+		join 
+			sys.partition_schemes ps1 on ix1.data_space_id = ps1.data_space_id
+		join 
+			sys.partition_functions pf1 on ps1.function_id = pf1.function_id
+		join 
+			information_schema.table_constraints tc on ix1.name = tc.CONSTRAINT_NAME
+		where 
+			ps1.[type] = 'PS'
+	) [partitionSchema] on [partitionSchema].CONSTRAINT_NAME = t.CONSTRAINT_NAME and [partitionSchema].TableName = t.TABLE_NAME
+where t.table_name like @prefix</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>select rtrim(o.name), c.text
+from syscomments c
+	inner join sysobjects o on o.id = c.id and o.xtype in ('FN','TF') and o.name not like 'dt_%'
+where o.name like @prefix
+order by c.id, c.colid</value>
+  </data>
+  <data name="IdentityColumns" xml:space="preserve">
+    <value>select rtrim(o.name), rtrim(c.name)
+from syscolumns c
+inner join sysobjects o on o.id = c.id
+where c.status &amp; 128 = 128
+and o.name like @prefix</value>
+  </data>
+  <data name="Indexes" xml:space="preserve">
+    <value>select 
+	rtrim(o.name),
+	rtrim(x.name),
+	convert(bit, case when indid = 1 then 1 else 0 end), 
+	convert(bit, case when x.status &amp; 2 = 2 then 1 else 0 end), 
+	isnull(rtrim(g.groupname), ''),
+	isnull(rtrim([partition_schema_name]),'')
+from sysobjects o 
+inner join sysindexes x on o.id = x.id 
+left join sysfilegroups g on x.groupid = g.groupid
+left join
+(
+	select 
+		t1.name [TableName],
+		ix1.name [indexesName],
+		ps1.name [partition_schema_name],
+		pf1.name [partition_function_name]
+	from 
+		sys.indexes ix1 
+	join 
+		sys.objects t1 on ix1.object_id = t1.object_id
+	join 
+		sys.partition_schemes ps1 on ix1.data_space_id = ps1.data_space_id
+	join 
+		sys.partition_functions pf1 on ps1.function_id = pf1.function_id
+	where 
+		ps1.[type] = 'PS'
+) [partitionSchema] on ([partitionSchema].TableName = o.name and [partitionSchema].indexesName = x.name)
+where o.type = 'U' 
+and x.status &amp; 2048 = 0 
+and x.status &amp; 4096 = 0 
+and x.indid between 1 and 254
+and o.name &lt;&gt; 'dtproperties' 
+and x.name not like '_wa_sys%' 
+and o.name like @prefix
+order by o.name, x.name</value>
+  </data>
+  <data name="IndexKeys" xml:space="preserve">
+    <value>select rtrim(o.name), rtrim(x.name), rtrim(c.name) + '|' + case INDEXKEY_PROPERTY(o.id, x.indid, k.keyno, 'IsDescending') when 0 then 'ASC' else 'DESC' end
+from sysobjects o 
+inner join sysindexes x on o.id = x.id 
+inner join sysindexkeys k on k.id = x.id and k.indid = x.indid
+inner join syscolumns c on c.id = k.id and c.colid = k.colid
+where o.type = 'U' 
+and x.status &amp; 2048 = 0 
+and x.status &amp; 4096 = 0 
+and x.indid between 1 and 254
+and o.name &lt;&gt; 'dtproperties' 
+and x.name not like '_wa_sys%' 
+and o.name like @prefix
+order by o.name, x.name, k.keyno</value>
+  </data>
+  <data name="Procedures" xml:space="preserve">
+    <value>select object_name(o.id), c.text
+from syscomments c
+	inner join sysobjects o on o.id = c.id and o.xtype = 'P' and o.name not like 'dt_%'
+where o.name like @prefix
+order by c.id, c.colid</value>
+  </data>
+  <data name="TableColumns" xml:space="preserve">
+    <value>select 
+	rtrim(c.table_name), 
+	rtrim(c.column_name), 
+	rtrim(c.data_type), 
+	c.character_maximum_length, 
+	rtrim(c.is_nullable), 
+	c.ordinal_position, 
+	rtrim(c.column_default),
+	c.numeric_precision,
+	c.numeric_scale,
+	--isnull(cc.is_computed,0)  as is_computed,
+	isnull(cc.is_persisted,0) as is_persisted,
+	cc.definition
+from 
+	information_schema.columns c
+	inner join information_schema.tables t on c.table_name = t.table_name
+	left join sys.computed_columns cc on c.COLUMN_NAME = cc.name
+where 
+	t.table_type = 'BASE TABLE'
+	and t.table_name like @prefix
+order by 
+	t.table_name, 
+	c.ordinal_position</value>
+  </data>
+  <data name="Tables" xml:space="preserve">
+    <value>select rtrim(name) from sysobjects
+where type = 'U'
+and name like @prefix
+order by crdate</value>
+  </data>
+  <data name="Triggers" xml:space="preserve">
+    <value>select rtrim(t.name), object_name(c.id), c.text
+from syscomments c
+	inner join sysobjects o on o.id = c.id and o.xtype = 'TR' and o.name not like 'dt_%'
+	inner join sysobjects t on o.parent_obj = t.id
+where t.name like @prefix
+order by c.id, c.colid</value>
+  </data>
+  <data name="Views" xml:space="preserve">
+    <value>select rtrim(o.name), c.text
+from syscomments c
+	inner join sysobjects o on o.id = c.id and o.xtype = 'V' and o.name not like 'dt_%' and o.name not like 'sys%'
+where o.name like @prefix
+order by c.id, c.colid</value>
+  </data>
+  <data name="TruncateGlobalization" xml:space="preserve">
+    <value>truncate table orb_Globalization</value>
+  </data>
+  <data name="ConstraintDefault" xml:space="preserve">
+    <value>SELECT 
+	o.name
+FROM 
+	sysobjects o 
+	INNER JOIN syscolumns c ON o.id = c.cdefault
+	INNER JOIN sysobjects t ON c.id = t.id
+WHERE 
+	o.xtype = 'D'
+	AND c.name = @ColumnName
+	AND t.name = @TableName</value>
+  </data>
+  <data name="GlobalizationGenData" xml:space="preserve">
+    <value>select 
+'INSERT [dbo].[orb_Globalization] ([glo_Interface], [glo_Page], [glo_Control], [glo_Culture], [glo_Text]) VALUES (' + cast([glo_Interface] as varchar) + ', N''' + [glo_Page] + ''', N''' + [glo_Control] + ''', N''' +[glo_Culture] + ''', N''' + replace([glo_Text], char(39), char(39) + char(39)) + ''')'
+from [orb_Globalization]
+order by glo_Interface, glo_Page, glo_Control</value>
+  </data>
+</root>

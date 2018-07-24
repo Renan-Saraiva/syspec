@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Vacinacao";
+    Layout = "~/Views/Shared/_Master.cshtml";    
+}
+@*@Html.Action("VacinacaoFormulario")*@
+@if (ViewBag.Vacinas != null && ViewBag.Vacinas.Count > 0)
+{
+    using (Html.BeginForm("Vacinacao", "Aplicacao", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="form-group">
+                    @Html.DropDownList("VacinaId", new SelectList(ViewBag.Vacinas, "Id", "Nome"), "Selecione...", new { @class = "form-control", data_val = "true", data_val_number = "The field Vacina must be a number.", data_val_required = "O campo Vacina é obrigatório." })
+                    <span class="field-validation-valid text-danger" data-valmsg-for="VacinaId" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-default">Executar</button>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                <span class="sr-only">Atenção:</span>
+                Não existe vacinas cadastradas. Clique @Html.ActionLink("aqui", "Index", "Vacina", null, new { @class = "alert-link" }) para registrar uma nova vacina.
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.ApresantaResuldado)
+{
+    if (ViewBag.Aplicacoes != null && ViewBag.Aplicacoes.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Relatorio de Vacinação
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="VacinacaoChart"></canvas>
+                        <br />
+                        <br />
+                        @Html.Partial("Listar")
+                        <script>
+    jQuery(function () {
+        var ctx = $("#VacinacaoChart");
+
+        var data = {
+            labels: [
+                "Animais Vacinados",
+                "Animais Não Vacinados"
+            ],
+            datasets: [
+                {
+                    data: [@ViewBag.Aplicacoes.Count, @(ViewBag.QuantidadeFazendaAnimais - @ViewBag.Aplicacoes.Count)],
+                    backgroundColor: [
+                        "#36A2EB",
+                        "#FFCE56"
+                    ],
+                    hoverBackgroundColor: [
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+        };
+
+        var animation = {
+            animateScale: true
+        };
+
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            animation: animation,
+            data: data
+        });
+    });
+                        </script>
+                        <script src="~/Scripts/Chart.min.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Atenção:</span>
+                    0 registros encontrados.
+                </div>
+            </div>
+        </div>
+    }
+}

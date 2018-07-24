@@ -1,0 +1,29 @@
+﻿@model SysPec.Data.Models.Aplicacao
+<div class="form-group">
+    @Html.LabelFor(m => m.Vacina)
+    @Html.DropDownList("Vacina", new SelectList(ViewBag.Vacinas, "Id", "Nome"), "Selecione...", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Vacina, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Metodo)
+    @Html.DropDownList("Metodo", new SelectList(SysPec.Data.Models.Metodos.List(), "Id", "Name"),"Selecione...", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Metodo, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Validade)
+    @Html.TextBoxFor(m => m.Validade, new { @class = "form-control", type = "date" })
+    @Html.ValidationMessageFor(m => m.Validade, "", new { @class = "text-danger" })
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Dosagem)
+    <div class="input-group">
+        <input class="form-control" data-val="true" data-val-number="The field Dosagem must be a number." data-val-range="Digite um valor superior a 0" data-val-range-max="3000" data-val-range-min="0.01" id="Dosagem" name="Dosagem" type="number">
+        <div class="input-group-addon">(ml,mg)</div>
+    </div>
+    <span class="field-validation-valid text-danger" data-valmsg-for="Dosagem" data-valmsg-replace="true"></span>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Anotacoes)
+    @Html.TextAreaFor(m => m.Anotacoes, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Anotacoes, "", new { @class = "text-danger" })
+</div>

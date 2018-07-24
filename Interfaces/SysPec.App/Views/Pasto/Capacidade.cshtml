@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Capacidade";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        @if (ViewBag.Pastos != null && ViewBag.Pastos.Count > 0)
+        {
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Nível de Utilização dos Pastos
+                </div>
+                <div class="panel-body">
+                    @foreach (SysPec.Data.Models.Pasto P in ViewBag.Pastos)
+                    {
+                        { P.GetQtnAnimais(); }
+                        <div>
+                            <div>
+                                <p>
+                                    <strong>@P.Nome</strong><span>  (Atualmente: @P.QtdAnimaisAtualmente  / Capacidade Máxima: @P.QtdAnimaisSuporte)</span>
+                                    <span class="pull-right text-muted">@P.PorcentagemUtilizacaoFormatada da capacidade</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar @(P.PorcentagemUtilizacao <= 49 ? "progress-bar-success" : P.PorcentagemUtilizacao <= 79 ? "progress-bar-warning" : "progress-bar-danger")" role="progressbar" aria-valuenow="@P.PorcentagemUtilizacao" aria-valuemin="0" aria-valuemax="100" style="width: @P.PorcentagemUtilizacao%">
+                                        <span class="sr-only">@P.PorcentagemUtilizacao Utilizada</span>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                <span class="sr-only">Atenção:</span>
+                Não existe pastos cadastradas.
+            </div>
+        }
+    </div>
+</div>
+

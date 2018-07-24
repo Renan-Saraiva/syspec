@@ -1,0 +1,70 @@
+﻿@model SysPec.Data.Models.Fazenda
+@{
+    ViewBag.Title = "Fazendas";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@using (Html.BeginForm("Index", "Fazenda", FormMethod.Post, new { role = "form"}))
+{
+    <p class="text-success text-center">@ViewBag.StatusMessage</p>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Criador)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Abreviatura)
+        @if (Model != null && Model.Id > 0)
+        {
+            <input type="text" value="@Model.Abreviatura" class="form-control" disabled />
+        }
+        else
+        {
+            @Html.TextBoxFor(m => m.Abreviatura, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Abreviatura, "", new { @class = "text-danger" })
+        }
+    </div>
+    if (!ViewBag.FazendaExiste)
+    {
+        <div class="checkbox">
+            <label onclick="$('#pnlPasto').toggle('slow')">
+                <input name="Informacao.PastoUnico" id="chkPastoUnico" type="checkbox"> <b>Pasto único?</b>
+            </label>
+        </div>
+        <div id="pnlPasto" style="display:none">
+            <div class="form-group">
+                <label for="PastoNome">Nome</label>
+                <input id="PastoNome" type="text" name="Pasto.Nome" class="form-control" data-val="true" data-val-length="O nome deve ter no minímos 3 caracteres" data-val-length-max="100" data-val-length-min="3" data-val-required="O campo Nome é obrigatório.">                               
+                <span class="field-validation-valid text-danger" data-valmsg-for="Pasto.Nome" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="qtdAnimaisSuporte">Quantidade máxima de animais suportado</label>
+                <input type="number" name="Pasto.QtdAnimaisSuporte" class="form-control" id="qtdAnimaisSuporte" data-val="true" data-val-required="O campo Quantidade máxima é obrigatório." data-val-range="A quantidade máxima de animais suportado deve estar entre 1 e 1000 animais" data-val-range-max="1000" data-val-range-min="1">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Pasto.QtdAnimaisSuporte" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <label for="Anotacoes">Anotações</label>
+                <textarea name="Pasto.Anotacoes" class="form-control" id="Anotacoes" data-val="true" data-val-length="As anotações não podem ultrapassar 8000 caracteres" data-val-length-max="8000"></textarea>
+                <span class="field-validation-valid text-danger" data-valmsg-for="Pasto.Anotacoes" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-3">
+            @if (ViewBag.FazendaExiste)
+            {
+                @Html.ActionLink("Nova Fazenda", "Index", null, new { @class = "btn btn-lg btn-primary btn-block" })
+            }
+        </div>
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-3">
+            <input type="submit" value="Salvar" class="btn btn-lg btn-success btn-block" />
+        </div>
+    </div>
+}
+<br />
+@Html.Action("Listar")

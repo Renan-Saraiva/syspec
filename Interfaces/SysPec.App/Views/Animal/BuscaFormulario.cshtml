@@ -1,0 +1,54 @@
+﻿@using (Html.BeginForm("Buscar", "Animal", FormMethod.Post, new { role = "form", id = "pesquisaForm" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TipoBusca" id="TipoBusca" value="0">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button id="cboTipoPesquisa" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span id="TipoSelecionado" style="display:inline!important" class="hidden-sm hidden-xs">Buscar Por</span>
+                        <span class="caret" />
+                    </button>
+                    <ul id="TipoPesquisa" class="dropdown-menu pull-left">
+                        <li><a id="linhaTipo" data-tipobusca="1" href="#">Código</a></li>
+                        <li><a id="paradaTipo" data-tipobusca="2" href="#">Lote</a></li>
+                    </ul>
+                </div>
+                <input id="ValorBusca" name="ValorBusca" type="search" class="form-control" placeholder="Buscar" />
+                <span class="input-group-btn">
+                    <button id="btnPesquisar" class="btn btn-primary btn-flat" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <span class="hidden-sm hidden-xs" style="display:inline!important">&nbsp;Buscar</span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        jQuery(function () {
+            $('#TipoPesquisa > li > a').on('click', function () {
+                $('#TipoSelecionado').text($(this).text());
+                $('#spnMark').remove();
+                $(this).prepend('<span id="spnMark" class="glyphicon glyphicon-ok">&nbsp;</span>');
+                $('#TipoBusca').val($(this).attr('data-TipoBusca'))
+            });
+
+            $('#btnPesquisar').on('click', function () {
+                var msg;
+                if ($('#TipoSelecionado').text() == 'Buscar Por') {
+                    msg = 'Selecione um método de busca';
+                }
+                else if ($('#ValorPesquisa').val() == '') {
+                    msg = 'Digite um valor de busca';
+                }
+                else {
+                    document.getElementById('pesquisaForm').submit();
+                }
+                if (msg.length > 0) {
+                    alert(msg);
+                }
+            });
+        });
+    </script>
+}

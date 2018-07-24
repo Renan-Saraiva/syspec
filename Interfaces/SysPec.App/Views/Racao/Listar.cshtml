@@ -1,0 +1,57 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Rações cadastradas
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.Racoes != null && ViewBag.Racoes.Count > 0)
+                {
+                    <div class="table-responsive dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-racoes">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Anotações</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < ViewBag.Racoes.Count; i++)
+                                {
+
+                                    <tr class="@(i % 2 == 0 ? "odd" : "even") gradeA">
+                                        <td>@ViewBag.Racoes[i].Nome</td>
+                                        <td>@SysPec.App.Helpers.Helper.GetSubString(ViewBag.Racoes[i].Anotacoes, 80)</td>
+                                        <td class="text-right">
+                                            <a href="@Url.Action("Index", new { RacaoId = ViewBag.Racoes[i].Id })" class="btn btn-primary btn-circle">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        jQuery(function () {
+                            $('#dataTables-racoes').DataTable();
+                        });
+                    </script>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-warning" role="alert">
+                                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Atenção:</span>
+                                Não existe rações cadastrados.
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

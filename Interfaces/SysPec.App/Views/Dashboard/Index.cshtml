@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@if (SysPec.App.Helpers.Current.FazendaId > 0)
+{
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-ra fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@ViewBag.Animais</div>
+                            <div>Animais</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("ListAnimais")">
+                    <div class="panel-footer">
+                        <span class="pull-left">Visualizar detalhes</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-cubes fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@ViewBag.Lotes</div>
+                            <div>Lotes</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("ListLotes")">
+                    <div class="panel-footer">
+                        <span class="pull-left">Visualizar detalhes</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tree fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@ViewBag.Pastos</div>
+                            <div>Pastos</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("ListPastos")">
+                    <div class="panel-footer">
+                        <span class="pull-left">Visualizar detalhes</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-external-link-square fa-fw"></i> Links Úteis
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="https://www.scotconsultoria.com.br/cotacoes/boi-gordo/" target="_blank" class="list-group-item">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Cotação da arroba do boi gordo
+                        </a>
+                        <a href="http://revistagloborural.globo.com/" target="_blank" class="list-group-item">
+                            <i class="fa fa-comments-o fa-fw"></i> Notícias do Campo
+                        </a>
+                        <a href="https://www.embrapa.br/" target="_blank" class="list-group-item">
+                            <i class="fa fa-trophy fa-fw"></i> Embrapa
+                        </a>
+                        <a href="http://www.agricultura.gov.br/animal/especies/bovinos-e-bubalinos" target="_blank" class="list-group-item">
+                            <i class="fa fa-home fa-fw"></i> Ministério da Agricultura
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Nível de Utilização
+                </div>
+                <div class="panel-body">
+                    @foreach (SysPec.Data.Estatisticas.CapacidadeUtilizada C in ViewBag.Capacidades)
+                    {
+                        <div>
+                            <div>
+                                <p>
+                                    <strong>@C.FazendaNome</strong>
+                                    <span class="pull-right text-muted">@C.PorcentagemFormatada da capacidade</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar @(C.Porcentagem <= 49 ? "progress-bar-success" : C.Porcentagem <= 79 ? "progress-bar-warning" : "progress-bar-danger")" role="progressbar" aria-valuenow="@C.Porcentagem" aria-valuemin="0" aria-valuemax="100" style="width: @C.Porcentagem%">
+                                        <span class="sr-only">@C.PorcentagemFormatada Utilizada</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                <span class="sr-only">Atenção:</span>
+                Não existe fazendas cadastradas. Clique @Html.ActionLink("aqui", "Index", "Fazenda", null, new { @class = "alert-link" }) para registrar uma nova fazenda.
+            </div>
+        </div>
+    </div>
+}

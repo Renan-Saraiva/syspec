@@ -1,0 +1,76 @@
+﻿@model SysPec.Data.Models.LoteModelBag
+@{
+    ViewBag.Title = "Pastos";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@using (Html.BeginForm("Index", "Lote", FormMethod.Post, new { role = "form" }))
+{
+    <p class="text-success text-center">@ViewBag.StatusMessage</p>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Lote.Id)
+    @Html.HiddenFor(m => m.Lote.Fazenda)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Lote.Nome)
+        @Html.TextBoxFor(m => m.Lote.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Lote.Nome, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Lote.Anotacoes)
+        @Html.TextAreaFor(m => m.Lote.Anotacoes, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Lote.Anotacoes, "", new { @class = "text-danger" })
+    </div>
+    if (!ViewBag.LoteExiste)
+    {
+        @Html.Action("AddAnimaisToLote")
+    }
+    <div class="row">
+        <div class="col-sm-3">
+            @if (ViewBag.LoteExiste)
+            {
+                @Html.ActionLink("Novo Pasto", "Index", null, new { @class = "btn btn-lg btn-primary btn-block" })
+            }
+        </div>
+        <div class="col-sm-3">
+            @if (ViewBag.LoteExiste)
+            {
+                <input type="button" data-toggle="modal" data-target="#mdlAddAnimaisToLote" value="Adicionar Animais" class="btn btn-lg btn-warning btn-block" />
+            }
+        </div>
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
+            <input type="submit" value="Salvar" class="btn btn-lg btn-success btn-block" />
+        </div>
+    </div>
+}
+@if (ViewBag.LoteExiste)
+{
+    <div class="modal fade" id="mdlAddAnimaisToLote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Incluir animais ao lote</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddAnimaisToLote", "Lote", FormMethod.Post, new { role = "form", id = "addAnimaisToLoteForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(m => m.Lote.Id)
+                        @Html.Action("AddAnimaisToLote", new { LoteId = Model.Lote.Id })
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button id="btnAddAnimaisToLote" type="button" class="btn btn-primary" onclick="if ($('#addAnimaisToLoteForm').valid()) document.getElementById('addAnimaisToLoteForm').submit()">Incluir animais</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    @Html.Action("ListByLote", "Animal", new { LoteId = Model.Lote.Id })
+}
+<br />
+@Html.Action("Listar")
