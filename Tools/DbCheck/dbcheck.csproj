@@ -136,8 +136,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="post_ocr5.sql" />
-    <EmbeddedResource Include="post_ocr5_globalization.sql" />
+    <EmbeddedResource Include="globalization.sql" />
     <Content Include="schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

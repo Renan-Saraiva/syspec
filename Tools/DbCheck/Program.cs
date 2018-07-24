@@ -630,7 +630,7 @@ namespace dbcheck
                         writeLog(ex.Message);
                     }
 
-                    using (Stream stream = assembly.GetManifestResourceStream("dbcheck.post_ocr5_globalization.sql"))
+                    using (Stream stream = assembly.GetManifestResourceStream("dbcheck.globalization.sql"))
                     {
                         using (StreamReader reader = new StreamReader(stream))
                         {
@@ -639,7 +639,7 @@ namespace dbcheck
                                     t++;
                         }
                     }
-                    using (Stream stream = assembly.GetManifestResourceStream("dbcheck.post_ocr5_globalization.sql"))
+                    using (Stream stream = assembly.GetManifestResourceStream("dbcheck.globalization.sql"))
                     {
                         using (StreamReader reader = new StreamReader(stream))
                         {
