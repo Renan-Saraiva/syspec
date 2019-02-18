@@ -295,8 +295,8 @@ namespace dbcheck
             writeLog("--Creating Programs");
             writeLog(string.Empty);
 
-            byte[] key = new byte[] { 22, 11, 134, 35, 85, 20, 121, 90, 84, 18, 71, 64, 73, 210, 77, 111, 192, 22, 7, 228, 150, 79, 99, 107 };
-            byte[] iv = new byte[] { 185, 196, 192, 43, 246, 70, 247, 8, 94, 220, 43, 136, 207, 158, 137, 170, 199, 17, 51, 180, 241, 105, 139, 252 };
+            byte[] key = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 134, 14, 144, 155, 16, 7, 18, 190, 20, 21, 222 };
+            byte[] iv = new byte[] { 222, 223, 224, 50, 225, 80, 130, 9, 12, 224, 80, 109, 30, 44, 70, 153, 170, 80, 49, 123, 196, 178, 101, 240 };
             Stream xFile = assembly.GetManifestResourceStream("dbcheck.progs.sql");
             CryptoStream cFile = new CryptoStream(xFile, new TripleDESCryptoServiceProvider().CreateDecryptor(key, iv), CryptoStreamMode.Read);
             byte[] b = new byte[xFile.Length];
